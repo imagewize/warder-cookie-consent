@@ -2,6 +2,14 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.3] - 2026-06-03
+
+### Build
+- The compiled `dist/cookieconsent.bundle.js` now begins with a comment banner (webpack `BannerPlugin`) pointing to the uncompressed source (`src/index.js`, `webpack.config.js`) and the public repository, making the source location visible from within the compiled file. Terser comment extraction to a separate `.LICENSE.txt` is disabled so the banner stays inline at the top of the bundle.
+
+### Documentation
+- Moved the `== Source Code ==` section higher in `readme.txt` (directly after the feature list) so the human-readable source reference is easy for reviewers to find. No functional changes.
+
 ## [2.1.2] - 2026-05-30
 
 ### Documentation
