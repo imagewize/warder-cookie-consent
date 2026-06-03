@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,6 +25,14 @@ Warder Cookie Consent provides an easy way to add GDPR-compliant cookie consent 
 * Floating preferences toggle button — lets users revisit consent choices at any time
 * Fully responsive design
 * No external dependencies
+
+== Source Code ==
+
+This plugin ships no obfuscated or minified-only code. The only compiled asset is `dist/cookieconsent.bundle.js`, bundled from human-readable source with webpack. Its first lines are a comment banner pointing back to the source. The uncompressed source (`src/index.js` and `webpack.config.js`) is included in the plugin download, and the full development repository is public:
+
+https://github.com/imagewize/warder-cookie-consent
+
+`src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Installation ==
 
@@ -56,15 +64,13 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 2. Cookie consent banner frontend view
 3. Cookie category management interface
 
-== Source Code ==
-
-This plugin ships no obfuscated or minified-only code. The only compiled asset is `dist/cookieconsent.bundle.js`, bundled from human-readable source with webpack. The uncompressed source (`src/index.js` and `webpack.config.js`) is included in the plugin download, and the full development repository is public:
-
-https://github.com/imagewize/warder-cookie-consent
-
-`src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
-
 == Changelog ==
+
+= 2.1.3 =
+*2026-06-03*
+
+* Build: the compiled `dist/cookieconsent.bundle.js` now begins with a comment banner (via webpack `BannerPlugin`) pointing to the uncompressed source and the public repository, so the source location is visible from within the compiled file itself. Comment extraction to a separate `.LICENSE.txt` is disabled so the banner stays inline.
+* Docs: moved the `== Source Code ==` section higher in readme.txt (directly after the feature list) so the human-readable source reference is easy to find. No functional changes.
 
 = 2.1.2 =
 *2026-05-30*
@@ -212,6 +218,9 @@ https://github.com/imagewize/warder-cookie-consent
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.1.3 =
+Build and documentation only: the compiled bundle now carries a source-link banner and the readme's Source Code section is more prominent. No functional changes.
 
 = 2.1.2 =
 Documentation-only release: adds a `CONTRIBUTING.md` and slims the README to user-facing docs. No functional changes.
