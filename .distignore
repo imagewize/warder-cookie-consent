@@ -2,6 +2,9 @@
 .git/*
 .github/*
 
+# WordPress.org marketing assets (banners, icon, screenshots) — pushed to SVN /assets, never shipped in the plugin zip
+.wordpress-org/*
+
 # Development files
 .DS_Store
 .gitattributes
@@ -25,6 +28,7 @@ CONTRIBUTING.md
 README.md
 dev.md
 docs/*
+bin/*
 *.sh
 
 # Editor files
