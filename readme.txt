@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -63,8 +63,15 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 1. Admin settings page
 2. Cookie consent banner frontend view
 3. Cookie category management interface
+4. Performance and analytics category, off by default for GDPR compliance
+5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.1.4 =
+*2026-06-04*
+
+* Listing: added screenshots and captions for the admin settings page, frontend consent modal, cookie category management, the opt-in analytics defaults, and regex cookie matching. No functional changes.
 
 = 2.1.3 =
 *2026-06-03*
@@ -218,6 +225,9 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.1.4 =
+Documentation only: adds listing screenshots and captions. No functional changes.
 
 = 2.1.3 =
 Build and documentation only: the compiled bundle now carries a source-link banner and the readme's Source Code section is more prominent. No functional changes.

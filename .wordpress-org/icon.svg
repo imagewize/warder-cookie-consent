@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!-- dark button background -->
+  <circle cx="128" cy="128" r="128" fill="#333333"/>
+  <!-- cookie outer ring (white disc minus dark disc) -->
+  <circle cx="128" cy="128" r="83.6" fill="#ffffff"/>
+  <circle cx="128" cy="128" r="68.4" fill="#333333"/>
+  <!-- chips -->
+  <circle cx="105.2" cy="105.2" r="11.4" fill="#ffffff"/>
+  <circle cx="150.8" cy="97.6"  r="7.6"  fill="#ffffff"/>
+  <circle cx="143.2" cy="143.2" r="11.4" fill="#ffffff"/>
+  <circle cx="105.2" cy="150.8" r="7.6"  fill="#ffffff"/>
+</svg>

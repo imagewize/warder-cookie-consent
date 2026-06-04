@@ -2,6 +2,14 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.4] - 2026-06-04
+
+### Documentation
+- Added five WordPress.org listing screenshots and matching `readme.txt` captions (admin settings, frontend consent modal, cookie category management, opt-in analytics defaults, regex cookie matching).
+
+### Build
+- Added a version-controlled `.wordpress-org/` directory (banners, icon, screenshots) and `bin/prepare-svn.sh` to assemble the SVN `trunk`/`tags`/`assets` layout. Both are excluded from the distributed plugin zip via `.distignore`.
+
 ## [2.1.3] - 2026-06-03
 
 ### Build
