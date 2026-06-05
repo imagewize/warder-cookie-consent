@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.1.4
+Stable tag: 2.2.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,12 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.2.0 =
+*2026-06-05*
+
+* Added: `uninstall.php` — WordPress-standard uninstall handler. Removes `warder_options` and `warder_options_last_updated` from the database when the plugin is deleted, but only when the user has opted in.
+* Added: **Danger Zone** section in settings with a "Remove Data on Uninstall" checkbox (unchecked by default). Data is preserved on uninstall unless explicitly opted in — consistent with Yoast SEO, WooCommerce, and other major plugins.
 
 = 2.1.4 =
 *2026-06-04*
@@ -225,6 +231,9 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.2.0 =
+Adds optional database cleanup on uninstall. Settings are preserved by default — tick "Remove Data on Uninstall" in the Danger Zone section of the settings page before deleting the plugin if you want a clean removal.
 
 = 2.1.4 =
 Documentation only: adds listing screenshots and captions. No functional changes.
