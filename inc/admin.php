@@ -343,6 +343,25 @@ function warder_render_options_page() {
 			}
 			?>
 
+			<!-- Danger Zone Section -->
+			<h2 style="color: #d63638; border-top: 1px solid #dcdcde; padding-top: 20px; margin-top: 30px;">
+				<?php esc_html_e( 'Danger Zone', 'warder-cookie-consent' ); ?>
+			</h2>
+			<table class="form-table">
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Remove Data on Uninstall', 'warder-cookie-consent' ); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="warder_options[remove_data_on_uninstall]" <?php checked( ! empty( $options['remove_data_on_uninstall'] ), true ); ?> />
+							<?php esc_html_e( 'Delete all plugin settings from the database when this plugin is uninstalled', 'warder-cookie-consent' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'When checked, all Warder Cookie Consent settings will be permanently removed from your database when you delete the plugin via Plugins > Delete. Leave unchecked to preserve your settings (useful if you plan to reinstall later).', 'warder-cookie-consent' ); ?>
+						</p>
+					</td>
+				</tr>
+			</table>
+
 			<!-- Submit button for main settings -->
 			<?php submit_button( __( 'Save All Settings', 'warder-cookie-consent' ), 'primary', 'submit', false ); ?>
 		</form>

@@ -85,6 +85,7 @@ function warder_validate_options( $input ) {
 	$valid['show_preferences_toggle']     = isset( $input['show_preferences_toggle'] ) ? true : false;
 	$valid['preferences_toggle_position'] = isset( $input['preferences_toggle_position'] ) && array_key_exists( $input['preferences_toggle_position'], warder_allowed_toggle_positions() )
 		? $input['preferences_toggle_position'] : 'bottom-right';
+	$valid['remove_data_on_uninstall']    = isset( $input['remove_data_on_uninstall'] ) ? true : false;
 
 	if ( isset( $input['cookie_categories'] ) && is_array( $input['cookie_categories'] ) ) {
 		$valid['cookie_categories'] = array();
