@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,11 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.1.5 =
+*2026-06-26*
+
+* Fixed: added `padding: 0` to `.warder-preferences-toggle` to prevent Astra Pro theme button styles (padding: 15px 30px) from distorting the floating toggle button and hiding its icon.
 
 = 2.1.4 =
 *2026-06-04*
@@ -225,6 +230,9 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.1.5 =
+Fixes a visual regression when Astra Pro is active: the floating preferences toggle button was inheriting button padding from the theme, distorting its shape and hiding the icon.
 
 = 2.1.4 =
 Documentation only: adds listing screenshots and captions. No functional changes.
