@@ -68,6 +68,7 @@ function warder_get_preferences_toggle_css() {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 0;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 	z-index: 9999;
 	transition: background 0.2s ease, transform 0.2s ease;

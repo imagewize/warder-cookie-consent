@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.5] - 2026-06-26
+
+### Fixed
+- Added `padding: 0` to `.warder-preferences-toggle` to prevent Astra Pro theme styles (padding: 15px 30px on button elements) from distorting the toggle button and hiding its icon. Props: gbogdan.
+
 ## [2.1.4] - 2026-06-04
 
 ### Documentation
