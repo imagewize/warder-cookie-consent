@@ -97,6 +97,8 @@ The `Version:` header in `warder-cookie-consent.php` is the canonical version (t
 
 `composer.json` intentionally has **no** `version` field — Packagist derives versions from git tags, so do not add one.
 
+After bumping the version, run `npx webpack` and commit the rebuilt `dist/cookieconsent.bundle.js` (its banner comment embeds the version) **before** tagging. Otherwise the committed bundle lags the release by one version — the distributed artifacts are still correct (the release Action and the SVN prep both rebuild), but the in-repo bundle and the tag's snapshot carry a stale version banner.
+
 ## Git Commits
 
 Do not mention "Claude" or "Claude Code" in commit messages.
