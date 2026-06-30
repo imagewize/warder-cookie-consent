@@ -1,5 +1,5 @@
 === Warder Cookie Consent ===
-Contributors: rhand
+Contributors: rhand, gbogdan
 Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
@@ -72,6 +72,7 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 *2026-06-26*
 
 * Fixed: added `padding: 0` to `.warder-preferences-toggle` to prevent Astra Pro theme button styles (padding: 15px 30px) from distorting the floating toggle button and hiding its icon.
+* Props: gbogdan for reporting and fixing the Astra Pro CSS incompatibility.
 
 = 2.1.4 =
 *2026-06-04*
