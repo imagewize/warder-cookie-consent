@@ -3,8 +3,8 @@ Contributors: rhand, gbogdan
 Donate link: https://imagewize.com
 Tags: cookie, consent, gdpr, privacy, compliance
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 2.1.5
+Tested up to: 7.1
+Stable tag: 2.1.6
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,12 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.1.6 =
+*2026-08-13*
+
+* Confirmed compatibility with WordPress 7.1 and updated `Tested up to`.
+* Build: updated webpack, css-loader, and PHP_CodeSniffer/WPCS tooling to their latest in-range versions; no functional changes.
 
 = 2.1.5 =
 *2026-06-26*
@@ -231,6 +237,9 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.1.6 =
+Confirms compatibility with WordPress 7.1. No functional changes.
 
 = 2.1.5 =
 Fixes a visual regression when Astra Pro is active: the floating preferences toggle button was inheriting button padding from the theme, distorting its shape and hiding the icon.
