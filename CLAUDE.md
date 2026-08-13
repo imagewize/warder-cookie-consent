@@ -99,6 +99,12 @@ The `Version:` header in `warder-cookie-consent.php` is the canonical version (t
 
 After bumping the version, run `npx webpack` and commit the rebuilt `dist/cookieconsent.bundle.js` (its banner comment embeds the version) **before** tagging. Otherwise the committed bundle lags the release by one version — the distributed artifacts are still correct (the release Action and the SVN prep both rebuild), but the in-repo bundle and the tag's snapshot carry a stale version banner.
 
+### Publishing to WordPress.org
+
+WordPress.org does not accept zip uploads for updates — releases are **SVN-only**. The GitHub Actions release zip is for the GitHub Releases page / Composer users; it has no effect on the wordpress.org listing.
+
+Publishing uses an external, generic deploy script (not part of this repo) against a local SVN working copy of `https://plugins.svn.wordpress.org/warder-cookie-consent`. Before reusing an existing local SVN checkout for a deploy, confirm it's actually a live working copy — `svn info <path>` — and that its `trunk/` matches the current remote (`svn cat https://plugins.svn.wordpress.org/warder-cookie-consent/trunk/readme.txt` for the published `Stable tag:`). A stale, non-`.svn` local mirror left over from a previous session will silently diverge from what's actually live; don't assume a local checkout reflects the last-published version without checking the remote directly.
+
 ## Git Commits
 
 Do not mention "Claude" or "Claude Code" in commit messages.
