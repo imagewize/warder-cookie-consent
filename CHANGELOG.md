@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.6] - 2026-08-13
+
+### Compatibility
+- Confirmed compatibility with WordPress 7.1 and updated `Tested up to` to 7.1. No code changes were required: the plugin does not interact with the post editor canvas/iframe, client-side media processing, `@wordpress/components`, the admin toolbar, or jQuery UI.
+
 ## [2.1.5] - 2026-06-26
 
 ### Fixed
