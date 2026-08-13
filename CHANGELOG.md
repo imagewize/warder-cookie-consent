@@ -2,6 +2,17 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.6] - 2026-08-13
+
+### Compatibility
+- Confirmed compatibility with WordPress 7.1 and updated `Tested up to` to 7.1. No code changes were required: the plugin does not interact with the post editor canvas/iframe, client-side media processing, `@wordpress/components`, the admin toolbar, or jQuery UI.
+
+### Build
+- Updated build/lint tooling to their latest in-range versions: `webpack` 5.107.2 → 5.109.2, `css-loader` 7.1.2 → 7.1.4, `wp-coding-standards/wpcs` 3.3.0 → 3.4.1, `phpcsstandards/phpcsutils` 1.2.2 → 1.2.3, `phpcsstandards/phpcsextra` 1.5.0 → 1.5.1, `squizlabs/php_codesniffer` 3.13.5 → 3.13.6. Left the two available major bumps (`webpack-cli` 7, `squizlabs/php_codesniffer` 4) alone pending dedicated compatibility testing.
+- `npm audit fix` resolved two high-severity transitive advisories (`nanoid`, `postcss`) pulled in by the webpack update.
+- webpack 5.109 dropped its internal dependency on `terser-webpack-plugin` in favor of a new bundled `minimizer-webpack-plugin`; `webpack.config.js` requires `terser-webpack-plugin` directly for its `extractComments: false` banner setup, so it is now declared as an explicit devDependency instead of relying on it being hoisted transitively.
+- Verified `npx webpack` and `composer exec phpcs` both still pass after the updates; rebuilt `dist/cookieconsent.bundle.js`.
+
 ## [2.1.5] - 2026-06-26
 
 ### Fixed
