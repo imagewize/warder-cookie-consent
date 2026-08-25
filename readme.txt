@@ -1,62 +1,130 @@
-=== Warder Cookie Consent ===
+=== Warder Cookie Consent - GDPR Cookie Banner ===
 Contributors: rhand, gbogdan
 Donate link: https://imagewize.com
-Tags: cookie, consent, gdpr, privacy, compliance
+Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A lightweight plugin that implements GDPR-compliant cookie consent functionality using the vanilla-cookieconsent library.
+Self-hosted GDPR cookie consent banner. Blocks analytics scripts until visitors opt in. No account, no external service, no paid tier.
 
 == Description ==
 
-Warder Cookie Consent provides an easy way to add GDPR-compliant cookie consent banners to your WordPress website. The plugin uses the lightweight [CookieConsent v3](https://github.com/orestbida/cookieconsent) library and offers full customization through the WordPress admin interface.
+Warder Cookie Consent puts a consent banner on your WordPress site and holds your analytics scripts until a visitor opts in. Everything runs from your own server: there is no account to create, no external service to call, and no paid tier.
 
-= Features =
+It is built on the open-source [CookieConsent v3](https://github.com/orestbida/cookieconsent) library, and adds a WordPress settings screen, cookie defaults for WordPress and WooCommerce, and automatic blocking for scripts that would otherwise set cookies before consent.
 
-* Lightweight and fast performance
-* Multi-language support (English, French, German, Spanish, Italian, Dutch)
-* Customizable banner appearance and text
-* Cookie category management (Necessary, Analytics, etc.)
-* Automatic cookie blocking and clearing
-* Floating preferences toggle button — lets users revisit consent choices at any time
-* Fully responsive design
-* No external dependencies
+= Why you might pick this one =
 
-== Source Code ==
+* **Nothing leaves your server.** The plugin makes no external HTTP requests — no CDN, no consent API, no phone-home. The script is served from your own domain.
+* **No account, no upsell, no expiry.** Every feature is in the free plugin. There is no pro tier, no per-domain limit and no trial.
+* **Small.** One deferred script of about 18KB gzipped, plus a little inline CSS for the floating button.
+* **Opt in, not opt out.** Non-necessary categories are unticked until the visitor chooses. That is what GDPR expects, and the plugin will not silently drift to something weaker.
+* **Scripts are actually blocked.** Known cookie-setting scripts are rewritten to `type="text/plain"` before the browser can run them, rather than being cleaned up afterwards.
 
-This plugin ships no obfuscated or minified-only code. The only compiled asset is `dist/cookieconsent.bundle.js`, bundled from human-readable source with webpack. Its first lines are a comment banner pointing back to the source. The uncompressed source (`src/index.js` and `webpack.config.js`) is included in the plugin download, and the full development repository is public:
+= What it does =
 
-https://github.com/imagewize/warder-cookie-consent
+* A consent banner, and a preferences modal with a toggle per category
+* Cookie categories you can add, rename and describe from the settings screen
+* A cookie list per category, matched by exact name or by regular expression
+* Automatic cookie clearing when a visitor withdraws consent for a category
+* A floating cookie button, in any of four corners, so visitors can change their mind later
+* Blocking for WooCommerce order attribution and SourceBuster out of the box
+* Blocking for any script you mark with `data-category`, or register through a filter
+* Editable banner title, description, button labels and privacy-policy link
+* Compatibility with page caching — the settings version is part of the script URL
 
-`src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
+= What ships pre-configured =
+
+**Strictly Necessary**, always on: `cc_cookie`, `wordpress_logged_in_*`, `wordpress_sec_*`, `wordpress_test_cookie`, `wp-settings-*`, `wp_woocommerce_session_*`, `woocommerce_cart_hash`, `woocommerce_items_in_cart`, `woocommerce_recently_viewed`, `PHPSESSID`.
+
+**Performance and Analytics**, off until accepted: Google Analytics (`_ga*`, `_gid`, `_gat`), Matomo (`_pk_*`, `mtm_*`) and SourceBuster (`sbjs_*`).
+
+= What it does not do =
+
+Stated plainly, so you can rule it out in thirty seconds rather than after installing:
+
+* **No consent log.** The visitor's choice is stored in their own browser, in `cc_cookie`. Nothing is written to your database, so there is no proof-of-consent export.
+* **No Google Consent Mode v2 signals.**
+* **No automatic cookie scanner.** You list the cookies you want managed.
+* **No CCPA "Do Not Sell" flow.**
+* **The built-in interface text is English.** Everything you are likely to want to change — title, description, both button labels — is editable, so the banner itself can read in any language.
+
+= A note on compliance =
+
+This plugin gives you the mechanism: blocking before consent, granular categories, a choice the visitor controls, and a way to revisit it. Whether your site is compliant depends on how you configure it and what your site actually loads. It is a tool, not legal advice.
+
+= For developers =
+
+Hold any script until a category is accepted:
+
+`<script type="text/plain" data-category="analytics" src="..."></script>`
+
+Or block a script that another plugin registered, by handle:
+
+`add_filter( 'warder_blocked_scripts', function ( $scripts ) {
+	$scripts['my-analytics-handle'] = 'analytics';
+	return $scripts;
+} );`
 
 == Installation ==
 
-1. Upload the plugin folder to `/wp-content/plugins/`
-2. Activate the plugin through the WordPress admin panel
-3. Configure settings at **Settings > Cookie Consent**
+1. In WordPress go to **Plugins > Add New**, search for "Warder Cookie Consent", then Install and Activate. Or upload the plugin folder to `/wp-content/plugins/` and activate it there.
+2. Open **Settings > Warder Consent**.
+3. Set your **Privacy Policy URL**. It ships as a placeholder, so this is the one setting you should not skip.
+4. Review the **Performance and Analytics** category and add any cookies your site sets that are not already listed.
+5. Mark any third-party scripts you embed yourself with `data-category="analytics"`.
+
+The banner appears straight away for visitors who have not yet made a choice. Nothing else is required.
 
 == Frequently Asked Questions ==
 
+= Does this make my site GDPR compliant? =
+
+No plugin can promise that. This one gives you the parts a consent flow needs — scripts held until consent, categories the visitor chooses individually, and a way to change that choice later. Compliance still depends on configuring it for what your site actually loads, and on the rest of your privacy practices.
+
+= Does it block Google Analytics before consent? =
+
+It clears Google Analytics cookies, and it will hold the GA script if that script carries `data-category="analytics"` or if you register its handle through the `warder_blocked_scripts` filter. If you load GA through another plugin, add that plugin's script handle to the filter — see the developer section above. Only WooCommerce order attribution and SourceBuster are blocked automatically.
+
+= Does it work with Google Tag Manager? =
+
+You can hold the GTM container itself the same way, with `data-category` on the snippet. The plugin does not emit Google Consent Mode v2 signals, so if your setup depends on those, this is not the right plugin for you.
+
+= Does the plugin send any data anywhere? =
+
+No. It makes no external HTTP requests at all. The consent script is served from your own domain, and the visitor's choice is stored in their browser in the `cc_cookie` cookie. Nothing is transmitted to us or to anyone else.
+
+= Does it keep a record of who consented? =
+
+Not on the server. The record lives in the visitor's own browser. If you need an auditable, exportable consent log stored in your database, use a plugin built for that.
+
+= Will it slow my site down? =
+
+The frontend is a single script, loaded deferred, about 18KB gzipped, plus a small inline stylesheet for the floating button. There are no external requests and no jQuery dependency.
+
+= Can I use it in a language other than English? =
+
+The banner text is yours to write: title, description and both button labels are all editable, so the banner can read in any language. The library's own built-in strings — the preferences modal's close label, for example — are English.
+
+= Is it compatible with caching plugins? =
+
+Yes. Settings are versioned with a timestamp that becomes part of the script URL, so a cached page always pulls the matching configuration.
+
 = How do I add custom cookie categories? =
 
-Go to **Settings > Cookie Consent** and use the "Add New Category" section at the bottom of the page.
+**Settings > Warder Consent**, then "Add New Category" at the bottom of the page. Each category gets its own title, description and cookie list, and appears as a toggle in the preferences modal.
 
-= Can I block specific scripts until consent is given? =
+= Which cookies are managed by default? =
 
-Yes, add a `data-category` attribute to your script tags (e.g. `data-category="analytics"`). Scripts with this attribute are managed by the cookie consent library based on user consent.
+WordPress and WooCommerce session cookies are marked strictly necessary, and Google Analytics, Matomo and SourceBuster cookies sit in an analytics category that is off until accepted. The full list is in the description above, and all of it is editable.
 
-= Which cookies are blocked by default? =
+= Can visitors change their mind after accepting? =
 
-The plugin pre-configures an analytics category covering Google Analytics cookies (`_ga`, `_gid`, `_gat`). You can add, remove, or modify cookie patterns in the admin settings.
-
-= Is the plugin compatible with caching plugins? =
-
-Yes. Settings are versioned via a timestamp that is appended to the script URL, so cached pages always load the correct configuration.
+Yes. The floating cookie button reopens the preferences modal at any time, and you can put it in any of the four corners or turn it off.
 
 == Screenshots ==
 
@@ -67,6 +135,15 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.1.7 =
+*2026-08-25*
+
+* Listing: rewrote the plugin description around what the plugin does and who it suits, rather than which library it wraps. Adds sections on the pre-configured WordPress/WooCommerce and analytics cookie defaults, a developer section covering `data-category` and the `warder_blocked_scripts` filter, and an explicit "What it does not do" list — no consent log, no Consent Mode v2, no cookie scanner, no CCPA flow — so the plugin can be ruled in or out before installing.
+* Listing: plugin title is now "Warder Cookie Consent - GDPR Cookie Banner", the short description leads with what it does instead of naming the bundled library, and the tags moved from single words to the phrases people search (`cookie banner`, `cookie consent`, `consent management`).
+* Listing: expanded the FAQ from four questions to eleven, covering the ones that actually decide the install — whether it blocks Google Analytics and GTM, whether it sends data anywhere, whether it keeps a consent record, page weight, and language.
+* Docs: corrected the multi-language claim. Only English interface strings ship; the banner text is editable, so the banner can read in any language, but the plugin has never carried French, German, Spanish, Italian or Dutch translations of the library's own strings.
+* Docs: `== Source Code ==` moved below the changelog. The directory concatenates unrecognised sections into the Details tab in file order, so keeping it directly under the feature list put build instructions ahead of the description for every visitor.
 
 = 2.1.6 =
 *2026-08-13*
@@ -236,7 +313,18 @@ Yes. Settings are versioned via a timestamp that is appended to the script URL, 
 
 * Initial release
 
+== Source Code ==
+
+This plugin ships no obfuscated or minified-only code. The only compiled asset is `dist/cookieconsent.bundle.js`, bundled from human-readable source with webpack. Its first lines are a comment banner pointing back to the source. The uncompressed source (`src/index.js` and `webpack.config.js`) is included in the plugin download, and the full development repository is public:
+
+https://github.com/imagewize/warder-cookie-consent
+
+`src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
+
 == Upgrade Notice ==
+
+= 2.1.7 =
+Listing and documentation only, no code changes. Rewritten description, expanded FAQ, and a corrected multi-language claim: the banner text is editable so it can read in any language, but only English interface strings ship.
 
 = 2.1.6 =
 Confirms compatibility with WordPress 7.1. No functional changes.

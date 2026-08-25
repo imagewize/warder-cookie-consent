@@ -2,6 +2,22 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.1.7] - 2026-08-25
+
+Listing and documentation only. No PHP, JavaScript or build changes; `dist/` is untouched.
+
+### Changed
+- Rewrote the readme description around what the plugin does and who it suits, rather than which library it wraps. The old version was eight generic bullets; the new one covers the differentiators that are actually true and verifiable (no external HTTP requests, no paid tier, ~18KB gzipped, opt-in defaults, scripts rewritten to `type="text/plain"` before they can run), the pre-configured WordPress/WooCommerce and analytics cookie lists, and a developer section for `data-category` and the `warder_blocked_scripts` filter.
+- Added an explicit "What it does not do" section — no consent log, no Google Consent Mode v2, no cookie scanner, no CCPA flow, English interface strings — so someone who needs one of those can rule the plugin out before installing rather than after. Also added a compliance note stating the plugin is a tool and not legal advice.
+- Plugin title is now "Warder Cookie Consent - GDPR Cookie Banner". The directory weights the title heavily in search, and "Warder" alone tells a searcher nothing.
+- Short description leads with what the plugin does instead of naming the bundled library. Tags moved from single words (`cookie`, `consent`, `compliance`) to the phrases people search (`cookie banner`, `cookie consent`, `consent management`).
+- FAQ expanded from four questions to eleven, covering what decides the install: Google Analytics and GTM blocking, whether any data is sent anywhere, whether a consent record is kept, page weight, and language.
+- Installation now names the Plugins > Add New path and lists the first-run steps, starting with the privacy policy URL — it ships as a placeholder and is the one setting that should not be skipped.
+- `== Source Code ==` moved below the changelog. WordPress.org concatenates unrecognised sections into the Details tab in file order, so keeping it directly under the feature list (where 2.1.3 put it) placed build instructions ahead of the description for every visitor. Reviewers read the raw readme, so the disclosure loses nothing by sitting lower.
+
+### Fixed
+- Corrected the multi-language claim in the readme. "Multi-language support (English, French, German, Spanish, Italian, Dutch)" was not backed by the code: `src/index.js` defines a `language.translations` object containing only `en`, and the shipped bundle contains no non-English interface strings. The banner text is editable, so a banner can read in any language; the claim of six bundled translations was wrong. This corrects the documentation only — the settings screen still offers the six-language dropdown.
+
 ## [2.1.6] - 2026-08-13
 
 ### Compatibility
