@@ -2,6 +2,11 @@
 .git/*
 .github/*
 
+# Local SVN working copies (never belong in the release payload)
+*-svn/*
+*-svn-staging/*
+.svn/*
+
 # WordPress.org marketing assets (banners, icon, screenshots) — pushed to SVN /assets, never shipped in the plugin zip
 .wordpress-org/*
 
