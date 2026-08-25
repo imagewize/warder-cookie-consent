@@ -2,6 +2,27 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.2.0] - 2026-08-25
+
+### Fixed
+- **Setting the banner language to anything other than English stopped the consent banner from rendering at all.** `src/index.js` assigned `config.language.default` from the `current_lang` setting but defined `language.translations` for `en` only. `vanilla-cookieconsent`'s `run()` resolves the language before it builds any modal and throws ``Could not load translation for the '<code>' language`` when the key is missing; because `run()` is async, that rejection escaped the synchronous `try/catch` around it and surfaced as an unhandled promise rejection with nothing on the page. The settings screen has offered a six-language dropdown since 1.0.0, so five of its six options disabled the plugin's only user-facing feature. Reproduced in a browser against the shipped bundle before the fix (`modalRendered: false`, `unhandledrejection: Could not load translation for the 'fr' language`) and after (`modalRendered: true`, no errors).
+- Removed twelve `console.log` calls that shipped in the production bundle and ran on every page load for every visitor, including a dump of the full plugin settings object and of the final consent configuration. 1.1.0's changelog claimed these were removed; that pass missed `src/index.js`. Genuine error reporting is kept and now carries a `Warder Cookie Consent:` prefix so it is attributable in a crowded console.
+- `CookieConsent.run()` is now awaited via `Promise.resolve(...).catch()`, so an initialisation failure is reported to the console rather than becoming a silent unhandled rejection. This is what made the language bug so hard to see from the outside: no banner, and nothing that named the plugin.
+
+### Added
+- Interface translations for Dutch, German, French, Spanish and Italian, alongside the existing English, so every option in the language dropdown now works. Covers the strings the settings screen does not expose: `showPreferencesBtn`, the preferences modal title, `savePreferencesBtn`, `closeIconLabel` and the intro section. Site-owner text (banner title, description, both button labels, category titles and descriptions) continues to override the built-in strings for whichever language is selected. **These translations have not been reviewed by native speakers** — they are standard consent-banner phrasing and worth a check before you lean on them.
+- An English fallback in `resolveLanguage()`. An unknown or stale language code now renders the banner in English instead of preventing it from loading, so a bad stored value can never leave a site with no consent banner at all. Verified with an invalid code (`lang=xx` → renders, falls back to English, no errors).
+- Bundle grows from 61,792 to 64,148 bytes (17,628 → 18,370 gzipped) for the five added languages.
+
+### Changed
+- Rewrote the readme description around what the plugin does and who it suits, rather than which library it wraps. The old version was eight generic bullets; the new one covers differentiators that are verifiable (no external HTTP requests, no paid tier, ~18KB gzipped, opt-in defaults, scripts rewritten to `type="text/plain"` before they can run), the pre-configured WordPress/WooCommerce and analytics cookie lists, and a developer section for `data-category` and the `warder_blocked_scripts` filter.
+- Added an explicit "What it does not do" section — no consent log, no Google Consent Mode v2, no cookie scanner, no CCPA flow — so someone who needs one of those can rule the plugin out before installing rather than after. Paired with a note that the plugin is a tool and not legal advice.
+- Plugin title is now "Warder Cookie Consent - GDPR Cookie Banner". The directory weights the title heavily in search, and "Warder" alone tells a searcher nothing.
+- Short description leads with what the plugin does instead of naming the bundled library. Tags moved from single words (`cookie`, `consent`, `compliance`) to the phrases people search (`cookie banner`, `cookie consent`, `consent management`).
+- FAQ expanded from four questions to eleven, covering what decides the install: Google Analytics and GTM blocking, whether any data is sent anywhere, whether a consent record is kept, page weight, and language.
+- Installation now names the Plugins > Add New path and lists the first-run steps, starting with the privacy policy URL — it ships as the placeholder `#privacy-policy` and is the one setting that should not be skipped.
+- `== Source Code ==` moved below the changelog. WordPress.org concatenates unrecognised sections into the Details tab in file order, so keeping it directly under the feature list (where 2.1.3 put it) placed build instructions ahead of the description for every visitor. Reviewers read the raw readme, so the guideline 4 disclosure loses nothing by sitting lower.
+
 ## [2.1.6] - 2026-08-13
 
 ### Compatibility
