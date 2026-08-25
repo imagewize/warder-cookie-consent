@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.1.7
+Stable tag: 2.2.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -35,6 +35,7 @@ It is built on the open-source [CookieConsent v3](https://github.com/orestbida/c
 * Blocking for WooCommerce order attribution and SourceBuster out of the box
 * Blocking for any script you mark with `data-category`, or register through a filter
 * Editable banner title, description, button labels and privacy-policy link
+* Interface strings in English, Dutch, German, French, Spanish and Italian
 * Compatibility with page caching — the settings version is part of the script URL
 
 = What ships pre-configured =
@@ -51,7 +52,7 @@ Stated plainly, so you can rule it out in thirty seconds rather than after insta
 * **No Google Consent Mode v2 signals.**
 * **No automatic cookie scanner.** You list the cookies you want managed.
 * **No CCPA "Do Not Sell" flow.**
-* **The built-in interface text is English.** Everything you are likely to want to change — title, description, both button labels — is editable, so the banner itself can read in any language.
+* **No automatic translation.** Six languages ship for the interface strings. The text you write yourself — title, description, button labels, category names — is stored once, in whatever language you type it.
 
 = A note on compliance =
 
@@ -108,7 +109,7 @@ The frontend is a single script, loaded deferred, about 18KB gzipped, plus a sma
 
 = Can I use it in a language other than English? =
 
-The banner text is yours to write: title, description and both button labels are all editable, so the banner can read in any language. The library's own built-in strings — the preferences modal's close label, for example — are English.
+Yes. Pick English, Dutch, German, French, Spanish or Italian under **Settings > Warder Consent** and the interface strings — "Manage preferences", "Accept current selection", the close label and so on — follow. The text you write yourself, such as the banner title, description, button labels and category names, is stored as you type it, so you write that part in your own language.
 
 = Is it compatible with caching plugins? =
 
@@ -136,13 +137,17 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 
 == Changelog ==
 
-= 2.1.7 =
+= 2.2.0 =
 *2026-08-25*
 
-* Listing: rewrote the plugin description around what the plugin does and who it suits, rather than which library it wraps. Adds sections on the pre-configured WordPress/WooCommerce and analytics cookie defaults, a developer section covering `data-category` and the `warder_blocked_scripts` filter, and an explicit "What it does not do" list — no consent log, no Consent Mode v2, no cookie scanner, no CCPA flow — so the plugin can be ruled in or out before installing.
+* Fixed: choosing any language other than English stopped the consent banner from appearing at all. `src/index.js` set the banner language from the settings but only ever defined English strings, and the library throws from `run()` when the selected language has no translation. Because `run()` is async, that rejection escaped the surrounding try/catch and surfaced as an unhandled promise rejection with no banner on the page. Reproduced in a browser before and after the fix.
+* Added: real interface translations for Dutch, German, French, Spanish and Italian, so all six options in the language dropdown now work. The strings you write yourself — title, description, button labels, category names — continue to override the built-in text for whichever language is selected.
+* Added: an English fallback. An unknown or stale language code now renders the banner in English instead of stopping it, so a bad stored value can never leave a site with no consent banner.
+* Fixed: removed twelve `console.log` calls that shipped in the production bundle and ran for every visitor, including a dump of the plugin settings and the final consent configuration. Genuine error reporting is kept and now carries a "Warder Cookie Consent:" prefix.
+* Fixed: `CookieConsent.run()` is awaited properly, so an initialisation failure is reported to the console instead of becoming a silent unhandled rejection.
+* Listing: rewrote the plugin description around what the plugin does and who it suits, rather than which library it wraps. Adds the pre-configured WordPress/WooCommerce and analytics cookie defaults, a developer section covering `data-category` and the `warder_blocked_scripts` filter, and an explicit "What it does not do" list — no consent log, no Consent Mode v2, no cookie scanner, no CCPA flow — so the plugin can be ruled in or out before installing.
 * Listing: plugin title is now "Warder Cookie Consent - GDPR Cookie Banner", the short description leads with what it does instead of naming the bundled library, and the tags moved from single words to the phrases people search (`cookie banner`, `cookie consent`, `consent management`).
 * Listing: expanded the FAQ from four questions to eleven, covering the ones that actually decide the install — whether it blocks Google Analytics and GTM, whether it sends data anywhere, whether it keeps a consent record, page weight, and language.
-* Docs: corrected the multi-language claim. Only English interface strings ship; the banner text is editable, so the banner can read in any language, but the plugin has never carried French, German, Spanish, Italian or Dutch translations of the library's own strings.
 * Docs: `== Source Code ==` moved below the changelog. The directory concatenates unrecognised sections into the Details tab in file order, so keeping it directly under the feature list put build instructions ahead of the description for every visitor.
 
 = 2.1.6 =
@@ -323,8 +328,8 @@ https://github.com/imagewize/warder-cookie-consent
 
 == Upgrade Notice ==
 
-= 2.1.7 =
-Listing and documentation only, no code changes. Rewritten description, expanded FAQ, and a corrected multi-language claim: the banner text is editable so it can read in any language, but only English interface strings ship.
+= 2.2.0 =
+Fixes a bug that stopped the consent banner from rendering at all on any site whose banner language was set to something other than English — if you use French, German, Spanish, Italian or Dutch, this release is the one that makes the banner work. Adds real translations for those five languages, and removes twelve debug console.log statements that ran on every page load.
 
 = 2.1.6 =
 Confirms compatibility with WordPress 7.1. No functional changes.
