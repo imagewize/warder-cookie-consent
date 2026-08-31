@@ -224,6 +224,17 @@ function createConfigFromSettings(defaultConfig, wpSettings) {
     // Start with a deep clone of the default config to avoid mutations
     const config = JSON.parse(JSON.stringify(defaultConfig));
 
+    // Scope the consent cookie to the current site's own path. Matters on a
+    // subdirectory multisite: every subsite shares one domain, so a path-less
+    // ('/') cookie set on /site-a/ is also sent on /site-b/'s requests, and
+    // vanilla-cookieconsent reads that as "this visitor already answered" —
+    // one subsite's consent bleeds into every other. warder_cookie_path() in
+    // PHP defaults to '/' on a normal single-site install, so this is a
+    // no-op there.
+    if (wpSettings && typeof wpSettings.cookie_path === 'string' && wpSettings.cookie_path !== '') {
+        config.cookie.path = wpSettings.cookie_path;
+    }
+
     if (!wpSettings || !wpSettings.settings) {
         return config;
     }
