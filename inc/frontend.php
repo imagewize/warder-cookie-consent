@@ -33,8 +33,9 @@ function warder_enqueue_scripts() {
 		'warder-cookieconsent',
 		'warderSettings',
 		array(
-			'settings' => $options,
-			'version'  => $version,
+			'settings'    => $options,
+			'version'     => $version,
+			'cookie_path' => warder_cookie_path(),
 		)
 	);
 
@@ -48,6 +49,25 @@ function warder_enqueue_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'warder_enqueue_scripts' );
+
+/**
+ * The URL path the consent cookie should be scoped to.
+ *
+ * Defaults to '/' on a normal install — same as vanilla-cookieconsent's own
+ * default, so single-site behaviour is unchanged. On a subdirectory
+ * multisite (e.g. example.com/site-a/, example.com/site-b/), home_url()
+ * already resolves to the current subsite's own subdirectory, so scoping the
+ * cookie to that path stops one subsite's consent choice from being read as
+ * consent on another — they share a domain, so a path-less ('/') cookie is
+ * otherwise sent on every subsite's requests.
+ *
+ * @return string
+ */
+function warder_cookie_path() {
+	$path = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+
+	return is_string( $path ) && '' !== $path ? $path : '/';
+}
 
 /**
  * Returns CSS for the floating preferences toggle button.

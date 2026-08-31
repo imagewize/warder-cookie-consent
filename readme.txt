@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -136,6 +136,11 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.2.1 =
+*2026-08-31*
+
+* Fixed: on a subdirectory WordPress multisite (e.g. example.com/site-a/, example.com/site-b/), accepting or rejecting cookies on one subsite was treated as consent on every other subsite on the same domain. The consent cookie had no `path` set, so the library's own default (`/`) sent it on every subdirectory. It is now scoped to the current subsite's own path (still `/` on a normal single-site install, so single-site behaviour is unchanged).
 
 = 2.2.0 =
 *2026-08-25*
@@ -327,6 +332,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.2.1 =
+Fixes consent bleeding between subsites on a subdirectory multisite network — one subsite's accept/reject choice was being read as consent on every other subsite on the same domain. No effect on single-site installs.
 
 = 2.2.0 =
 Fixes a bug that stopped the consent banner from rendering at all on any site whose banner language was set to something other than English — if you use French, German, Spanish, Italian or Dutch, this release is the one that makes the banner work. Adds real translations for those five languages, and removes twelve debug console.log statements that ran on every page load.

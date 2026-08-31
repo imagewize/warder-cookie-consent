@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.2.1] - 2026-08-31
+
+### Fixed
+- **Consent bled between subsites on a subdirectory WordPress multisite.** `src/index.js`'s `defaultConfig.cookie` set `name` and `expiresAfterDays` but no `path`, so `vanilla-cookieconsent` fell back to its own default of `/`. On a subdirectory multisite (`example.com/site-a/`, `example.com/site-b/`, …) every subsite shares one domain, so a path-less cookie set by accepting or rejecting on one subsite was also sent on every other subsite's requests — the library read it as "this visitor already answered" everywhere, not just on the subsite where they actually answered. New `warder_cookie_path()` in `inc/frontend.php` resolves the current site's own path from `home_url( '/' )` and localizes it as `cookie_path`; `createConfigFromSettings()` in `src/index.js` applies it to `config.cookie.path` before `CookieConsent.run()`. Defaults to `/` on a normal single-site install — same as before — so single-site behaviour is unchanged. Found while auditing `demo.imagewize.com`'s subdirectory multisite (9 subsites) after activating the plugin on two of them.
+
 ## [2.2.0] - 2026-08-25
 
 ### Fixed
