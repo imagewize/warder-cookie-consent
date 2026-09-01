@@ -1,5 +1,12 @@
 # Warder Cookie Consent
 
+[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/warder-cookie-consent.svg)](https://wordpress.org/plugins/warder-cookie-consent/)
+[![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/warder-cookie-consent.svg)](https://wordpress.org/plugins/warder-cookie-consent/)
+[![WordPress Plugin Rating](https://img.shields.io/wordpress/plugin/rating/warder-cookie-consent.svg)](https://wordpress.org/support/plugin/warder-cookie-consent/reviews/)
+[![Tested up to](https://img.shields.io/wordpress/plugin/tested/warder-cookie-consent.svg)](https://wordpress.org/plugins/warder-cookie-consent/)
+[![Latest Stable Version](https://img.shields.io/packagist/v/imagewize/warder-cookie-consent.svg)](https://packagist.org/packages/imagewize/warder-cookie-consent)
+[![License](https://img.shields.io/badge/license-GPLv2%2B-blue.svg)](LICENSE)
+
 A lightweight plugin that implements GDPR-compliant cookie consent functionality for WordPress websites using the [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) library.
 
 ## Features
