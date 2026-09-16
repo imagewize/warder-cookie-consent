@@ -19,7 +19,15 @@ A lightweight plugin that implements GDPR-compliant cookie consent functionality
 
 ## Installation
 
-### Method 1: Using WordPress Admin
+### Method 1: WordPress.org Plugin Directory
+
+1. In your WordPress admin panel, go to Plugins > Add New Plugin
+2. Search for "Warder Cookie Consent"
+3. Click "Install Now", then "Activate"
+
+Or install directly from the [WordPress.org plugin page](https://wordpress.org/plugins/warder-cookie-consent/).
+
+### Method 2: Using WordPress Admin (ZIP Upload)
 
 1. Download the plugin ZIP file from the releases page
 2. Go to your WordPress admin panel
@@ -27,14 +35,14 @@ A lightweight plugin that implements GDPR-compliant cookie consent functionality
 4. Choose the downloaded ZIP file and click "Install Now"
 5. Activate the plugin
 
-### Method 2: Manual Installation
+### Method 3: Manual Installation
 
 1. Download the plugin ZIP file
 2. Extract the ZIP file
 3. Upload the extracted folder to your `/wp-content/plugins/` directory
 4. Activate the plugin through the WordPress admin panel
 
-### Method 3: Using Composer
+### Method 4: Using Composer
 
 You can also install the plugin using Composer:
 ```bash
