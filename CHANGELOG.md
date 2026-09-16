@@ -2,6 +2,15 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.2.2] - 2026-09-17
+
+### Security
+- Updated `browserslist`, `baseline-browser-mapping`, `fast-uri` and `postcss-selector-parser` (transitive `devDependencies` pulled in by the webpack build) to versions without open advisories, via `npm audit fix`. These are build-time only; `dist/cookieconsent.bundle.js` rebuilds byte-identical.
+
+### Documentation
+- Replaced `.vibe/prompts/vibe.md` with `AGENTS.md` at the repo root, matching the `nynaeve` and `aludra` sibling repos: agent instructions now live in `AGENTS.md` (a "Repository Guidelines" structure deferring to `CLAUDE.md` for architecture/versioning detail), so the custom prompt override is redundant. `.vibe/config.toml`'s `system_prompt_id` reverts from `vibe` to the `cli` default for the same reason.
+- Added a "Local Testing" section to `CLAUDE.md` (and a matching summary in `AGENTS.md`) documenting the local Trellis/Bedrock sync workflow: rather than cutting a release to test a local change, sync this working copy into `~/code/imagewize.com/site`'s pinned plugin install via wp-ops' `rsync-package-to-site`.
+
 ## [2.2.1] - 2026-08-31
 
 ### Fixed
