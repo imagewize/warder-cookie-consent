@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -136,6 +136,11 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.2.2 =
+*2026-09-17*
+
+* Security: updated dev-only build tooling (browserslist, fast-uri and related webpack dependencies) to versions without known advisories. No runtime code changes; the compiled bundle is unaffected.
 
 = 2.2.1 =
 *2026-08-31*
@@ -332,6 +337,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.2.2 =
+Dev-tooling security update only (build-time dependencies). No functional changes.
 
 = 2.2.1 =
 Fixes consent bleeding between subsites on a subdirectory multisite network — one subsite's accept/reject choice was being read as consent on every other subsite on the same domain. No effect on single-site installs.
