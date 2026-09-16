@@ -86,6 +86,40 @@ warder_options = [
 
 Each `cookies` entry has `name` (exact string or `/regex/` pattern) and `is_regex` (bool flag indicating whether `name` should be treated as a regular expression).
 
+## Local Testing
+
+Manual/visual testing happens against `imagewize.com` (host `imagewize.test`, Bedrock root
+`~/code/imagewize.com/site`) — a local **Trellis** (Roots) VM site running **Bedrock**, and the
+production content clone. This is the Imagewize maintainer's own setup, not a project
+requirement — other contributors test against whatever local WordPress/Bedrock install they have
+the plugin installed on.
+
+- Trellis root: `~/code/imagewize.com/trellis`. The VM is **Lima-based**, not Vagrant — commands
+  run via `trellis vm shell`, which shells out to `limactl`.
+- The plugin is installed there as a **pinned Composer dependency**
+  (`imagewize/warder-cookie-consent`), **not** symlinked to this working copy.
+- **Testing unreleased changes: sync, don't release.** Do not cut a release to test a local
+  change — sync instead, with `rsync-package-to-site` from
+  [wp-ops](https://github.com/imagewize/wp-ops), via the `wp-ops` CLI (run
+  `~/code/wp-ops/install.sh` once if `wp-ops` isn't on your PATH yet):
+
+  ```bash
+  SITE_ROOT=~/code/imagewize.com/site/web/app \
+    wp-ops rsync-package-to-site plugin warder-cookie-consent ~/code/warder-cookie-consent
+  ```
+
+  It mirrors `.distignore`, so what you test is what ships. Run `npx webpack` first so
+  `dist/cookieconsent.bundle.js` reflects your latest `src/index.js` changes before syncing.
+  A `composer update imagewize/warder-cookie-consent` on the site restores the released code.
+
+  **Always pass the plugin working copy (`~/code/warder-cookie-consent`) as the explicit source
+  argument, and do not `cd` into the site to run this.** When the source argument is omitted the
+  script defaults it to `$PWD` — so running this from inside the site rsyncs the entire Bedrock
+  site *into* `plugins/warder-cookie-consent/`, and because the sync uses `--delete
+  --delete-excluded`, it wipes the real plugin. Preview with `--dry-run` (before the `plugin`
+  argument) when unsure; if the output shows it deleting WordPress core (`web/wp/...`) or Bedrock
+  files (`.env`, `config/`), the source argument is wrong — stop.
+
 ## Versioning
 
 The `Version:` header in `warder-cookie-consent.php` is the canonical version (this is what WordPress.org reads). When bumping the version, update all of these together:
