@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.3.1] - 2026-10-09
+
+### Security
+- Updated `source-map-js` 1.2.1 → 1.2.2 (transitive `devDependency` pulled in by the webpack/postcss build) via `npm audit fix`, resolving GHSA-68fv-2mgg-jv7q / CVE-2026-93749 (high: event-loop denial of service through indexed source-map section offsets; Dependabot alert #26). Build-time only; it never ships in the plugin.
+
 ## [2.3.0] - 2026-10-09
 
 ### Added
