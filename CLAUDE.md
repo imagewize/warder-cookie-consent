@@ -69,6 +69,7 @@ warder_options = [
   'page_scripts'               => bool,
   'show_preferences_toggle'    => bool,
   'preferences_toggle_position'=> string,
+  'remove_data_on_uninstall'   => bool,   // opt-in DB cleanup in uninstall.php
   'title'                      => string,
   'description'                => string,
   'primary_btn_text'           => string,

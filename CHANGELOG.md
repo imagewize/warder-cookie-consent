@@ -2,6 +2,15 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.3.0] - 2026-10-09
+
+### Added
+- `uninstall.php`, a WordPress-standard uninstall handler. When the plugin is deleted via Plugins > Delete, it removes `warder_options`, `warder_options_last_updated` and the `warder_options_cache` transient, but only if the site opted in. On multisite it iterates every subsite and respects each site's own setting.
+- **Danger Zone** section at the bottom of the settings page with a "Remove Data on Uninstall" checkbox, backed by a new `remove_data_on_uninstall` option (default `false`). Data is preserved unless the admin explicitly opts in, matching the convention of major plugins (Yoast SEO, WooCommerce). Supersedes #36, ported onto the current codebase.
+
+### Compatibility
+- Confirmed compatibility with WordPress 7.1, the current latest release (7.1.3). `Tested up to: 7.1` already covers all 7.1.x point releases.
+
 ## [2.2.2] - 2026-09-17
 
 ### Security
