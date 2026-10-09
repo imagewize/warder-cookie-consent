@@ -29,8 +29,8 @@ There is no automated test suite (no PHPUnit). PHP requires 8.0+.
 ## Coding Style & Naming Conventions
 - All PHP functions and hooks use the `warder_` prefix; options are stored as a single array
   under `warder_options` in `wp_options`.
-- Settings are always read via `warder_get_merged_options()` (deep-merges DB values with
-  `warder_get_default_options()`) — never read `get_option( 'warder_options' )` raw.
+- Settings are always read via `warder_get_merged_options()` (shallow, top-level
+  `wp_parse_args()` merge of DB values over `warder_get_default_options()`) — never read `get_option( 'warder_options' )` raw.
 - JS is bundled via webpack; edit `src/index.js`, never `dist/cookieconsent.bundle.js` directly.
 - Follow WordPress PHP coding standards (enforced by `vendor/bin/phpcs`, config in `phpcs.xml`).
 
