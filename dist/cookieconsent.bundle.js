@@ -1,5 +1,5 @@
 /*!
- * Warder Cookie Consent v2.2.2
+ * Warder Cookie Consent v2.3.0
  * This file is compiled from human-readable source with webpack.
  * Source: src/index.js (shipped in this plugin) + webpack.config.js
  * Repository: https://github.com/imagewize/warder-cookie-consent

@@ -11,6 +11,8 @@ anything not covered here.
 - `inc/ajax.php` — AJAX save and add/delete category/cookie handlers.
 - `inc/admin.php` — admin menu, admin script enqueue, settings page rendering.
 - `inc/frontend.php` — frontend script enqueue/localize and the floating preferences toggle.
+- `uninstall.php` — opt-in data cleanup on plugin deletion (per subsite on multisite); runs
+  standalone, so it can't use `inc/` helpers.
 - `src/index.js` — JS entry point; maps `window.warderSettings` to vanilla-cookieconsent config.
 - `dist/cookieconsent.bundle.js` — compiled output (do not edit directly; run `npx webpack`).
 - `assets/js/admin.js` — admin page JS (AJAX save, UI interactions).
@@ -29,8 +31,11 @@ There is no automated test suite (no PHPUnit). PHP requires 8.0+.
 ## Coding Style & Naming Conventions
 - All PHP functions and hooks use the `warder_` prefix; options are stored as a single array
   under `warder_options` in `wp_options`.
-- Settings are always read via `warder_get_merged_options()` (deep-merges DB values with
-  `warder_get_default_options()`) — never read `get_option( 'warder_options' )` raw.
+- Settings are read via `warder_get_merged_options()` (shallow, top-level `wp_parse_args()`
+  merge of DB values over `warder_get_default_options()`). Don't read
+  `get_option( 'warder_options' )` raw, except where the raw stored value is the point:
+  the existence check and activation merge in `inc/settings.php`, and `uninstall.php`
+  (which runs without the plugin loaded).
 - JS is bundled via webpack; edit `src/index.js`, never `dist/cookieconsent.bundle.js` directly.
 - Follow WordPress PHP coding standards (enforced by `vendor/bin/phpcs`, config in `phpcs.xml`).
 

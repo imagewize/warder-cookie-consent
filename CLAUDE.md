@@ -39,11 +39,12 @@ WordPress DB (warder_options key)
 `WARDER_PLUGIN_FILE` and `require_once`s the modules under `inc/`. Each module owns one
 concern:
 
-- **`inc/defaults.php`** — `warder_get_default_options()` (canonical default settings) and `warder_get_merged_options()` (DB options deep-merged with defaults; always returns a complete object)
+- **`inc/defaults.php`** — `warder_get_default_options()` (canonical default settings) and `warder_get_merged_options()` (DB options merged over the defaults with `wp_parse_args()`: a **shallow**, top-level merge, so every top-level key is present, but a stored `cookie_categories` replaces the default one wholesale)
 - **`inc/settings.php`** — `register_setting()` registration, `warder_sanitize_options_input()` / `warder_validate_options()` (sanitize + whitelist before saving to `warder_options`), the `warder_options_last_updated` timestamp updater, and the activation hook
 - **`inc/ajax.php`** — `warder_ajax_save_settings()` (AJAX save) and `warder_handle_admin_actions()` (add/delete category and cookie actions)
 - **`inc/admin.php`** — admin menu registration, admin script enqueueing, `warder_render_options_page()` (the Settings > Cookie Consent UI), and admin notices
 - **`inc/frontend.php`** — `warder_enqueue_scripts()` (enqueues `dist/cookieconsent.bundle.js`, localizes it as `window.warderSettings`) and the floating preferences toggle button
+- **`uninstall.php`** (plugin root) — opt-in cleanup when the plugin is deleted: removes `warder_options`, `warder_options_last_updated` and the `warder_options_cache` transient, but only for sites whose `remove_data_on_uninstall` is true (iterates every subsite on multisite). WordPress runs it standalone, so it can't use the `inc/` helpers
 
 Settings are versioned via the `warder_options_last_updated` timestamp for cache busting.
 
@@ -69,6 +70,7 @@ warder_options = [
   'page_scripts'               => bool,
   'show_preferences_toggle'    => bool,
   'preferences_toggle_position'=> string,
+  'remove_data_on_uninstall'   => bool,   // opt-in DB cleanup in uninstall.php
   'title'                      => string,
   'description'                => string,
   'primary_btn_text'           => string,

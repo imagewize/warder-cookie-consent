@@ -27,6 +27,7 @@ function warder_get_default_options() {
 		'privacy_policy_url'          => '#privacy-policy',
 		'show_preferences_toggle'     => true,
 		'preferences_toggle_position' => 'bottom-right',
+		'remove_data_on_uninstall'    => false,
 		'cookie_categories'           => array(
 			'necessary' => array(
 				'title'       => 'Strictly Necessary',
@@ -118,7 +119,10 @@ function warder_get_default_options() {
 }
 
 /**
- * Retrieves options from the database and deep-merges with defaults.
+ * Retrieves options from the database merged over the defaults.
+ *
+ * The merge is shallow (wp_parse_args): every top-level key is guaranteed, but a
+ * stored cookie_categories array replaces the default one entirely.
  *
  * @return array
  */
