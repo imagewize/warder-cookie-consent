@@ -17,7 +17,8 @@ On multisite every subsite has its own copies of these, in its own `wp_{id}_opti
 | Function | Location | Purpose |
 |----------|----------|---------|
 | `register_setting()` | `inc/settings.php` | Registers `warder_options` with `warder_validate_options()` as the sanitize callback |
-| `get_option()` | `inc/defaults.php`, `inc/settings.php`, `inc/admin.php`, `inc/frontend.php`, `uninstall.php` | Reads `warder_options` / `warder_options_last_updated` |
+| `get_option()` | `inc/defaults.php`, `inc/settings.php`, `uninstall.php` | Reads raw `warder_options` (merge helper, existence check, activation merge, uninstall opt-in) |
+| `get_option()` | `inc/admin.php`, `inc/frontend.php` | Reads `warder_options_last_updated` (admin notice, script version); settings come from `warder_get_merged_options()` |
 | `add_option()` | `inc/settings.php` | Creates default options on the first admin load if none exist |
 | `update_option()` | `inc/settings.php`, `inc/ajax.php` | Saves settings (activation merge, AJAX save, add/delete category and cookie actions) and the timestamp |
 | `delete_option()` | `uninstall.php` | Removes both options on uninstall, only when the site opted in |
@@ -86,9 +87,9 @@ Keep both.
 
 After an opted-in uninstall, reinstalling and activating writes fresh defaults (including the placeholder privacy policy URL). This is expected, but worth knowing when restoring a site from a backup: use `update_option` (or `wp option update`), not `add_option`, since activation has already recreated the row.
 
-### Duplicate merge in the settings page
+### Settings page uses the merge helper
 
-`warder_render_options_page()` in `inc/admin.php` repeats `get_option()` + `wp_parse_args()` instead of calling `warder_get_merged_options()`. The result is the same; switching to the helper would remove the duplication.
+Until 2.3.0, `warder_render_options_page()` in `inc/admin.php` repeated `get_option()` + `wp_parse_args()` instead of calling `warder_get_merged_options()`. It now uses the helper, and keeps its own guard that falls back to the default `cookie_categories` if the stored value isn't an array. Raw `get_option( 'warder_options' )` reads are left only where the raw value is the point: the existence check and activation merge in `inc/settings.php`, and `uninstall.php`.
 
 ### Unused transient
 

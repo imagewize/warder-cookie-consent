@@ -69,11 +69,10 @@ function warder_render_options_page() {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$warder_notice = isset( $_GET['warder_notice'] ) ? sanitize_key( wp_unslash( $_GET['warder_notice'] ) ) : '';
 
-	$options         = get_option( 'warder_options', array() );
-	$default_options = warder_get_default_options();
-	$options         = wp_parse_args( $options, $default_options );
+	$options = warder_get_merged_options();
 
-	if ( ! isset( $options['cookie_categories'] ) || ! is_array( $options['cookie_categories'] ) ) {
+	if ( ! is_array( $options['cookie_categories'] ) ) {
+		$default_options              = warder_get_default_options();
 		$options['cookie_categories'] = $default_options['cookie_categories'];
 	}
 
