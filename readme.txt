@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -136,6 +136,11 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.3.1 =
+*2026-10-09*
+
+* Security: updated `source-map-js` (dev-only build tooling, GHSA-68fv-2mgg-jv7q) to 1.2.2. No runtime code changes; the compiled bundle is unaffected.
 
 = 2.3.0 =
 *2026-10-09*
@@ -343,6 +348,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.3.1 =
+Dev-dependency security update only. No changes to plugin behaviour.
 
 = 2.3.0 =
 Adds optional database cleanup on uninstall. Settings are kept by default; tick "Remove Data on Uninstall" in the Danger Zone section before deleting the plugin if you want a clean removal.
