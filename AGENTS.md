@@ -71,6 +71,13 @@ is the maintainer's own setup, not a project requirement.
   together, then `npx webpack` is run and the rebuilt `dist/cookieconsent.bundle.js` is
   committed before tagging.
 
+## Publishing to WordPress.org
+Releases are SVN-only. Use `bin/prepare-svn.sh` (stages `trunk/`, `tags/<version>/`, `assets/`;
+never touches SVN) and then do the `svn co` → `rsync --delete` trunk → copy tag/assets →
+`svn add --force` → `svn ci --username Rhand` steps by hand. The exact command sequence is in
+CLAUDE.md "Publishing to WordPress.org". The old wp-ops `deploy-plugin-wporg.sh` no longer exists.
+Scratch dirs (`~/code/warder-svn-staging`, `~/code/warder-svn`) are throwaway: recreate fresh each time.
+
 ## Security & Dependency Hygiene
 - Dependabot tracks the JS toolchain (`package-lock.json`) and PHP dev tooling
   (`composer.lock`). These are build-time/dev dependencies, not runtime code shipped to
