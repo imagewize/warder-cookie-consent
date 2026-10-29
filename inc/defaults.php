@@ -112,6 +112,10 @@ function warder_get_default_options() {
 						'name'     => '/^sbjs_/',
 						'is_regex' => true,
 					),
+					array(
+						'name'     => 'slimstat_tracking_code',
+						'is_regex' => false,
+					),
 				),
 			),
 		),
