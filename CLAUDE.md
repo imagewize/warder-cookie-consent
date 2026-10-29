@@ -139,7 +139,23 @@ After bumping the version, run `npx webpack` and commit the rebuilt `dist/cookie
 
 WordPress.org does not accept zip uploads for updates — releases are **SVN-only**. The GitHub Actions release zip is for the GitHub Releases page / Composer users; it has no effect on the wordpress.org listing.
 
-Publishing uses an external, generic deploy script (not part of this repo) against a local SVN working copy of `https://plugins.svn.wordpress.org/warder-cookie-consent`. Before reusing an existing local SVN checkout for a deploy, confirm it's actually a live working copy — `svn info <path>` — and that its `trunk/` matches the current remote (`svn cat https://plugins.svn.wordpress.org/warder-cookie-consent/trunk/readme.txt` for the published `Stable tag:`). A stale, non-`.svn` local mirror left over from a previous session will silently diverge from what's actually live; don't assume a local checkout reflects the last-published version without checking the remote directly.
+Publish with the in-repo script `bin/prepare-svn.sh`. (The old wp-ops `deploy-plugin-wporg.sh` was removed — don't look for it.) It rebuilds the bundle, assembles `trunk/`, `tags/<version>/` and `assets/` via `.distignore`, and never touches SVN itself:
+
+```bash
+git checkout main && git pull        # must be on the release tag's commit
+rm -rf ~/code/warder-svn-staging ~/code/warder-svn
+bash bin/prepare-svn.sh ~/code/warder-svn-staging   # output is plain files, no .svn
+cd ~/code && svn co https://plugins.svn.wordpress.org/warder-cookie-consent warder-svn
+rsync -a --delete --exclude=.svn warder-svn-staging/trunk/ warder-svn/trunk/   # --delete drops removed files
+cp -R warder-svn-staging/tags/<version> warder-svn/tags/
+cp -R warder-svn-staging/assets/. warder-svn/assets/
+cd warder-svn && svn add --force trunk tags assets
+svn status                           # review: expect trunk changes + the new tag; no stray .svn dirs
+svn ci -m "Release <version>" --username Rhand   # capital R; password is in the macOS keychain
+rm -rf ~/code/warder-svn-staging ~/code/warder-svn
+```
+
+Before and after, confirm the live version: `svn cat https://plugins.svn.wordpress.org/warder-cookie-consent/trunk/readme.txt | grep "Stable tag"`. Both directories are throwaway scratch — always recreate them fresh; a stale local copy silently diverges from what is live, and never create an SVN checkout inside the plugin tree.
 
 ## Git Commits
 
