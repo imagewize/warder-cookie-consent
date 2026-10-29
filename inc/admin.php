@@ -22,6 +22,22 @@ function warder_add_options_page() {
 add_action( 'admin_menu', 'warder_add_options_page' );
 
 /**
+ * Processes add/delete actions before any admin output is sent, so the
+ * post-action redirect in warder_handle_admin_actions() can set its headers.
+ */
+function warder_process_admin_actions() {
+	$options = warder_get_merged_options();
+
+	if ( ! is_array( $options['cookie_categories'] ) ) {
+		$default_options              = warder_get_default_options();
+		$options['cookie_categories'] = $default_options['cookie_categories'];
+	}
+
+	warder_handle_admin_actions( $options );
+}
+add_action( 'load-settings_page_warder-cookie-consent', 'warder_process_admin_actions' );
+
+/**
  * Enqueues jQuery-dependent admin scripts for the plugin settings page.
  *
  * @param string $hook The current admin page hook suffix.
@@ -75,8 +91,6 @@ function warder_render_options_page() {
 		$default_options              = warder_get_default_options();
 		$options['cookie_categories'] = $default_options['cookie_categories'];
 	}
-
-	$options = warder_handle_admin_actions( $options );
 
 	?>
 	<div class="wrap">

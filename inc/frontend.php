@@ -166,6 +166,7 @@ function warder_block_script_until_consent( $tag, $handle ) {
 		array(
 			'sourcebuster-js'      => 'analytics',
 			'wc-order-attribution' => 'analytics',
+			'wp_slimstat'          => 'analytics',
 		)
 	);
 

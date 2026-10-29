@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -32,7 +32,7 @@ It is built on the open-source [CookieConsent v3](https://github.com/orestbida/c
 * A cookie list per category, matched by exact name or by regular expression
 * Automatic cookie clearing when a visitor withdraws consent for a category
 * A floating cookie button, in any of four corners, so visitors can change their mind later
-* Blocking for WooCommerce order attribution and SourceBuster out of the box
+* Blocking for WooCommerce order attribution, SourceBuster and Slimstat out of the box
 * Blocking for any script you mark with `data-category`, or register through a filter
 * Editable banner title, description, button labels and privacy-policy link
 * Interface strings in English, Dutch, German, French, Spanish and Italian
@@ -42,7 +42,7 @@ It is built on the open-source [CookieConsent v3](https://github.com/orestbida/c
 
 **Strictly Necessary**, always on: `cc_cookie`, `wordpress_logged_in_*`, `wordpress_sec_*`, `wordpress_test_cookie`, `wp-settings-*`, `wp_woocommerce_session_*`, `woocommerce_cart_hash`, `woocommerce_items_in_cart`, `woocommerce_recently_viewed`, `PHPSESSID`.
 
-**Performance and Analytics**, off until accepted: Google Analytics (`_ga*`, `_gid`, `_gat`), Matomo (`_pk_*`, `mtm_*`) and SourceBuster (`sbjs_*`).
+**Performance and Analytics**, off until accepted: Google Analytics (`_ga*`, `_gid`, `_gat`), Matomo (`_pk_*`, `mtm_*`), SourceBuster (`sbjs_*`) and Slimstat (`slimstat_tracking_code`).
 
 = What it does not do =
 
@@ -121,7 +121,7 @@ Yes. Settings are versioned with a timestamp that becomes part of the script URL
 
 = Which cookies are managed by default? =
 
-WordPress and WooCommerce session cookies are marked strictly necessary, and Google Analytics, Matomo and SourceBuster cookies sit in an analytics category that is off until accepted. The full list is in the description above, and all of it is editable.
+WordPress and WooCommerce session cookies are marked strictly necessary, and Google Analytics, Matomo, SourceBuster and Slimstat cookies sit in an analytics category that is off until accepted. The full list is in the description above, and all of it is editable.
 
 = Can visitors change their mind after accepting? =
 
@@ -136,6 +136,12 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.3.2 =
+*2026-10-30*
+
+* Fix: adding or removing a cookie or category no longer leaves a blank settings page. The change was saved, but the redirect ran after admin output had started. Actions now run on the page's load hook.
+* Fix: Slimstat's tracker (`wp_slimstat`) is blocked by default again until the Analytics category is accepted, and `slimstat_tracking_code` is in the default Analytics cookies. This reverses 2.1.1: with the handle left to a filter, a site running Slimstat could set its cookie before consent without noticing.
 
 = 2.3.1 =
 *2026-10-09*
@@ -348,6 +354,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.3.2 =
+Fixes a blank settings page after adding a cookie, and blocks Slimstat until Analytics consent. Existing sites: add `slimstat_tracking_code` to Analytics in the settings if you use Slimstat; saved cookie lists are not overwritten.
 
 = 2.3.1 =
 Dev-dependency security update only. No changes to plugin behaviour.
