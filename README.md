@@ -88,7 +88,7 @@ This means you can easily configure which cookies to block and when to allow the
 
 The default configuration includes:
 - **Necessary cookies**: Always enabled, required for basic website functionality. Pre-populated with WordPress core cookies (`wordpress_logged_in_*`, `wordpress_sec_*`, `wordpress_test_cookie`, `wp-settings-*`) and WooCommerce session & cart cookies (`wp_woocommerce_session_*`, `woocommerce_cart_hash`, `woocommerce_items_in_cart`, `woocommerce_recently_viewed`).
-- **Analytics cookies**: Optional tracking and analytics cookies, pre-populated with patterns for Google Analytics (`/^_ga/`, `_gid`, `_gat`), Matomo (`/^_pk_/`, `/^mtm_/`), and SourceBuster (`/^sbjs_/`).
+- **Analytics cookies**: Optional tracking and analytics cookies, pre-populated with patterns for Google Analytics (`/^_ga/`, `_gid`, `_gat`), Matomo (`/^_pk_/`, `/^mtm_/`), SourceBuster (`/^sbjs_/`) and Slimstat (`slimstat_tracking_code`).
 
 > Plausible Analytics is cookieless by design, so it needs no patterns here — there are no cookies to clear.
 
@@ -127,6 +127,7 @@ The plugin automatically blocks a set of known WordPress script handles before a
 |---|---|
 | `sourcebuster-js` | WooCommerce SourceBuster (sets `sbjs_*` cookies) |
 | `wc-order-attribution` | WooCommerce order attribution |
+| `wp_slimstat` | Slimstat Analytics (sets `slimstat_tracking_code`) |
 
 To add more scripts, use the `warder_blocked_scripts` filter:
 
@@ -140,9 +141,6 @@ add_filter( 'warder_blocked_scripts', function( $scripts ) {
 #### Common examples
 
 ```php
-// Slimstat Analytics
-$scripts['wp_slimstat'] = 'analytics';
-
 // MonsterInsights
 $scripts['monsterinsights-frontend'] = 'analytics';
 ```

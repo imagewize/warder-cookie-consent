@@ -2,6 +2,18 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.3.2] - 2026-10-30
+
+### Fixed
+- Adding or deleting a cookie or category showed a blank settings page (the change was saved; a reload showed it). `warder_handle_admin_actions()` ran inside the page render callback, after admin output had started, so `wp_safe_redirect()` could not send its headers and the following `exit` cut the page off. It now runs on `load-settings_page_warder-cookie-consent`, before any output.
+- Slimstat (`wp_slimstat` handle) is back in the default `warder_blocked_scripts` list, so its tracker and `slimstat_tracking_code` cookie wait for Analytics consent. **This reverses 2.1.1**, which removed it as "dead code for most sites" and left it to the filter. An unused entry costs nothing; a missing one let Slimstat set its cookie before consent on imagewize.com, whose filter was never added. The function's docblock still claimed Slimstat was blocked.
+
+### Added
+- `slimstat_tracking_code` (exact match) in the default Analytics cookies, so rejecting or withdrawing consent clears it. Only new installs get it automatically: saved `cookie_categories` are kept as they are, so existing Slimstat sites should add it under Settings > Warder Consent.
+
+### Documentation
+- README "Automatic Script Blocking" table lists `wp_slimstat`; removed the now-redundant Slimstat filter example. readme.txt feature list and pre-configured cookie list updated.
+
 ## [2.3.1] - 2026-10-09
 
 ### Security
