@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.3.3] - 2026-11-10
+
+### Security
+- Updated `fast-uri` 3.1.8 → 3.1.9 (transitive `devDependency` pulled in by the webpack build) via `npm audit fix`, resolving GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr, GHSA-333x-w4r6-6crp and GHSA-xhq7-xmqj-769h (URI scheme spoofing via percent-encoded scheme decoding, host confusion via unchecked WHATWG host canonicalization, scheme injection via an unescaped first-segment colon, and improper path equivalence in relative reference normalization). Build-time only; it never ships in the plugin.
+
 ## [2.3.2] - 2026-10-30
 
 ### Fixed

@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -136,6 +136,11 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.3.3 =
+*2026-11-10*
+
+* Security: updated `fast-uri` (dev-only build tooling; GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr, GHSA-333x-w4r6-6crp, GHSA-xhq7-xmqj-769h) to 3.1.9. No runtime code changes; the compiled bundle is unaffected.
 
 = 2.3.2 =
 *2026-10-30*
@@ -354,6 +359,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.3.3 =
+Dev-dependency security update only. No changes to plugin behaviour.
 
 = 2.3.2 =
 Fixes a blank settings page after adding a cookie, and blocks Slimstat until Analytics consent. Existing sites: add `slimstat_tracking_code` to Analytics in the settings if you use Slimstat; saved cookie lists are not overwritten.
