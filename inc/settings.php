@@ -72,11 +72,11 @@ function warder_validate_options( $input ) {
 	// checkbox itself (PHP keeps the last value), so test for a truthy value instead
 	// of isset(): isset() is also true for an empty string and would wrongly store
 	// true for an unchecked box.
-	$valid['enabled']                     = ! empty( $input['enabled'] ) && '0' !== (string) $input['enabled'];
+	$valid['enabled']                     = ! empty( $input['enabled'] );
 	$valid['current_lang']                = isset( $input['current_lang'] ) && array_key_exists( $input['current_lang'], warder_allowed_languages() )
 		? $input['current_lang'] : 'en';
-	$valid['autoclear_cookies']           = ! empty( $input['autoclear_cookies'] ) && '0' !== (string) $input['autoclear_cookies'];
-	$valid['page_scripts']                = ! empty( $input['page_scripts'] ) && '0' !== (string) $input['page_scripts'];
+	$valid['autoclear_cookies']           = ! empty( $input['autoclear_cookies'] );
+	$valid['page_scripts']                = ! empty( $input['page_scripts'] );
 	$valid['title']                       = isset( $input['title'] ) ? sanitize_text_field( $input['title'] ) : '';
 	$valid['description']                 = isset( $input['description'] ) ? wp_kses_post( $input['description'] ) : '';
 	$valid['primary_btn_text']            = isset( $input['primary_btn_text'] ) ? sanitize_text_field( $input['primary_btn_text'] ) : '';
@@ -86,10 +86,10 @@ function warder_validate_options( $input ) {
 	$valid['secondary_btn_role']          = isset( $input['secondary_btn_role'] ) && in_array( $input['secondary_btn_role'], array( 'accept_necessary', 'settings' ), true )
 		? $input['secondary_btn_role'] : 'accept_necessary';
 	$valid['privacy_policy_url']          = isset( $input['privacy_policy_url'] ) ? esc_url_raw( $input['privacy_policy_url'] ) : '';
-	$valid['show_preferences_toggle']     = ! empty( $input['show_preferences_toggle'] ) && '0' !== (string) $input['show_preferences_toggle'];
+	$valid['show_preferences_toggle']     = ! empty( $input['show_preferences_toggle'] );
 	$valid['preferences_toggle_position'] = isset( $input['preferences_toggle_position'] ) && array_key_exists( $input['preferences_toggle_position'], warder_allowed_toggle_positions() )
 		? $input['preferences_toggle_position'] : 'bottom-right';
-	$valid['remove_data_on_uninstall']    = ! empty( $input['remove_data_on_uninstall'] ) && '0' !== (string) $input['remove_data_on_uninstall'];
+	$valid['remove_data_on_uninstall']    = ! empty( $input['remove_data_on_uninstall'] );
 
 	if ( isset( $input['cookie_categories'] ) && is_array( $input['cookie_categories'] ) ) {
 		$valid['cookie_categories'] = array();
