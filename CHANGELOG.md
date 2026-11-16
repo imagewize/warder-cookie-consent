@@ -2,6 +2,12 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [2.3.4] - 2026-11-16
+
+### Fixed
+- Unchecking a settings checkbox — including "Show a floating button" — and saving now persists the off state. Each checkbox is paired with a hidden `0` field so the key is always present in the POST payload, and `warder_validate_options()` now tests for a truthy value instead of `isset()` (which is also true for an empty string, so a missing or empty value could be stored as `true`). Reported in the WordPress.org support topic "Floating button setting and translations not working".
+- Admin: the Consent Modal section now explains that the pre-filled English texts override the built-in translation of the selected Language, and that clearing a field falls back to that language's built-in string. Previously, picking a non-English language appeared to translate only the strings the settings screen does not expose (e.g. "Manage preferences"), because the banner title, description and button labels are pre-filled with the English defaults.
+
 ## [2.3.3] - 2026-11-10
 
 ### Security

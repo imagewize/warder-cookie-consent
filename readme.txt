@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -109,7 +109,7 @@ The frontend is a single script, loaded deferred, about 18KB gzipped, plus a sma
 
 = Can I use it in a language other than English? =
 
-Yes. Pick English, Dutch, German, French, Spanish or Italian under **Settings > Warder Consent** and the interface strings — "Manage preferences", "Accept current selection", the close label and so on — follow. The text you write yourself, such as the banner title, description, button labels and category names, is stored as you type it, so you write that part in your own language.
+Yes. Pick English, Dutch, German, French, Spanish or Italian under **Settings > Warder Consent** and the interface strings — "Manage preferences", "Accept current selection", the close label and so on — follow. The text you write yourself, such as the banner title, description, button labels and category names, is stored as you type it, so you write that part in your own language. The banner fields are pre-filled with the English defaults and override the selected language's built-in strings — clear a field to use the translation instead.
 
 = Is it compatible with caching plugins? =
 
@@ -136,6 +136,12 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.3.4 =
+*2026-11-16*
+
+* Fix: unchecking a settings checkbox (including "Show a floating button") and saving now keeps it off. Checkboxes are paired with a hidden "0" field so the value is always submitted, and validation tests for a truthy value instead of isset().
+* Admin: the Consent Modal section now notes that its pre-filled English texts override the selected language's built-in translations — clear a field to use the translation. Reported in the WordPress.org support topic "Floating button setting and translations not working".
 
 = 2.3.3 =
 *2026-11-10*
@@ -359,6 +365,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.3.4 =
+Fixes the "Show a floating button" checkbox (and the other checkboxes) not staying off after saving, and clarifies in the admin that the pre-filled banner texts override the selected language's translations — clear a field to use the translation.
 
 = 2.3.3 =
 Dev-dependency security update only. No changes to plugin behaviour.
