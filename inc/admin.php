@@ -113,6 +113,7 @@ function warder_render_options_page() {
 					<th scope="row"><?php esc_html_e( 'Enable Plugin', 'warder-cookie-consent' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="warder_options[enabled]" value="0" />
 							<input type="checkbox" name="warder_options[enabled]" <?php checked( $options['enabled'], true ); ?> />
 							<?php esc_html_e( 'Display the cookie consent banner on the frontend', 'warder-cookie-consent' ); ?>
 						</label>
@@ -126,13 +127,14 @@ function warder_render_options_page() {
 								<option value="<?php echo esc_attr( $lang_code ); ?>" <?php selected( $options['current_lang'], $lang_code ); ?>><?php echo esc_html( $lang_label ); ?></option>
 							<?php endforeach; ?>
 						</select>
-						<p class="description"><?php esc_html_e( "Default language for the cookie consent banner. For more languages, you'll need to modify the src/index.js file.", 'warder-cookie-consent' ); ?></p>
+						<p class="description"><?php esc_html_e( "Default language for the cookie consent banner. For more languages, you'll need to modify the src/index.js file. Banner texts set under Consent Modal below override this language's built-in strings — clear them to use the translation.", 'warder-cookie-consent' ); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Auto-clear Cookies', 'warder-cookie-consent' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="warder_options[autoclear_cookies]" value="0" />
 							<input type="checkbox" name="warder_options[autoclear_cookies]" <?php checked( $options['autoclear_cookies'], true ); ?> />
 							<?php esc_html_e( 'Automatically clear cookies when user rejects them', 'warder-cookie-consent' ); ?>
 						</label>
@@ -142,6 +144,7 @@ function warder_render_options_page() {
 					<th scope="row"><?php esc_html_e( 'Page Scripts', 'warder-cookie-consent' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="warder_options[page_scripts]" value="0" />
 							<input type="checkbox" name="warder_options[page_scripts]" <?php checked( $options['page_scripts'], true ); ?> />
 							<?php esc_html_e( 'Control script execution based on user consent', 'warder-cookie-consent' ); ?>
 						</label>
@@ -151,6 +154,7 @@ function warder_render_options_page() {
 					<th scope="row"><?php esc_html_e( 'Preferences Toggle Button', 'warder-cookie-consent' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="warder_options[show_preferences_toggle]" value="0" />
 							<input type="checkbox" name="warder_options[show_preferences_toggle]" <?php checked( $options['show_preferences_toggle'], true ); ?> />
 							<?php esc_html_e( 'Show a floating button to reopen cookie preferences', 'warder-cookie-consent' ); ?>
 						</label>
@@ -168,6 +172,9 @@ function warder_render_options_page() {
 
 			<!-- Consent Modal Section -->
 			<h2><?php esc_html_e( 'Consent Modal', 'warder-cookie-consent' ); ?></h2>
+			<p class="description">
+				<?php esc_html_e( 'The texts below are pre-filled with the English defaults and override the built-in translation of the selected Language. To show the banner in another language, clear a field (or set it to your own translation) — an empty field falls back to the built-in string for the selected language.', 'warder-cookie-consent' ); ?>
+			</p>
 			<table class="form-table">
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Title', 'warder-cookie-consent' ); ?></th>
@@ -365,6 +372,7 @@ function warder_render_options_page() {
 					<th scope="row"><?php esc_html_e( 'Remove Data on Uninstall', 'warder-cookie-consent' ); ?></th>
 					<td>
 						<label>
+							<input type="hidden" name="warder_options[remove_data_on_uninstall]" value="0" />
 							<input type="checkbox" name="warder_options[remove_data_on_uninstall]" <?php checked( ! empty( $options['remove_data_on_uninstall'] ), true ); ?> />
 							<?php esc_html_e( 'Delete all plugin settings from the database when this plugin is uninstalled', 'warder-cookie-consent' ); ?>
 						</label>

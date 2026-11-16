@@ -60,6 +60,31 @@ is the maintainer's own setup, not a project requirement.
   Always pass the explicit source dir and never run this from inside the site — an omitted
   source defaults to `$PWD`, and the sync's `--delete --delete-excluded` would wipe the target.
   Run `npx webpack` first so the synced `dist/` reflects your latest `src/index.js`.
+- Demo site (this plugin is active there): **http://demo.imagewize.test/** — a Bedrock multisite
+  in the same Trellis VM. Host dir `~/code/imagewize.com/demo` is Lima-synced live to
+  `/srv/www/demo.imagewize.com/current` (web root `web/`), so the installed plugin copy is
+  `~/code/imagewize.com/demo/web/app/plugins/warder-cookie-consent`. To test this working copy
+  there instead of the pinned release, sync it the same way as above:
+  ```bash
+  SITE_ROOT=~/code/imagewize.com/demo/web/app \
+    wp-ops rsync-package-to-site plugin warder-cookie-consent ~/code/warder-cookie-consent
+  ```
+  Lima mirrors the change into the VM automatically.
+- wp-cli inside the VM (no stored admin password — create a throwaway admin, or drive handlers
+  in-process with `wp eval-file`):
+  ```bash
+  cd ~/code/imagewize.com/trellis
+  trellis vm shell --workdir /srv/www/demo.imagewize.com/current -- \
+    wp <cmd> --url=demo.imagewize.test --path=web/wp
+  # throwaway admin:
+  trellis vm shell --workdir /srv/www/demo.imagewize.com/current -- \
+    wp user create vibetest vibe@example.test --user_pass=<pw> --role=administrator \
+      --url=demo.imagewize.test --path=web/wp
+  ```
+  Repro/save-simulation scripts for the AJAX settings handler live in
+  `~/code/imagewize.com/scripts/warder-cookie-consent/` (drop them into
+  `~/code/imagewize.com/demo/` so Lima syncs them to the VM, run with `wp eval-file`, then
+  delete them again).
 
 ## Commit & Pull Request Guidelines
 - Branch off `main` before committing; never commit directly to `main`.
