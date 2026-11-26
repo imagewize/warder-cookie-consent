@@ -4,7 +4,7 @@ Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
 Tested up to: 7.2
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -136,6 +136,11 @@ Yes. The floating cookie button reopens the preferences modal at any time, and y
 5. Regex cookie matching and adding custom categories
 
 == Changelog ==
+
+= 2.3.5 =
+*2026-11-26*
+
+* Confirmed compatibility with WordPress 7.2 and updated `Tested up to`. No functional changes.
 
 = 2.3.4 =
 *2026-11-16*
@@ -365,6 +370,9 @@ https://github.com/imagewize/warder-cookie-consent
 `src/index.js` imports the [vanilla-cookieconsent v3](https://github.com/orestbida/cookieconsent) library. To build from source: run `npm install`, then `npx webpack` (or `npx webpack --watch` during development).
 
 == Upgrade Notice ==
+
+= 2.3.5 =
+Compatibility update for WordPress 7.2. No functional changes.
 
 = 2.3.4 =
 Fixes the "Show a floating button" checkbox (and the other checkboxes) not staying off after saving, and clarifies in the admin that the pre-filled banner texts override the selected language's translations — clear a field to use the translation.
