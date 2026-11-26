@@ -3,7 +3,7 @@ Contributors: rhand, gbogdan
 Donate link: https://imagewize.com
 Tags: cookie banner, cookie consent, gdpr, consent management, privacy
 Requires at least: 5.0
-Tested up to: 7.1
+Tested up to: 7.2
 Stable tag: 2.3.4
 Requires PHP: 8.0
 License: GPLv2 or later

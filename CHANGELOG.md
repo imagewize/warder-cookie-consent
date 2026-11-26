@@ -2,6 +2,11 @@
 
 All notable changes to Warder Cookie Consent are documented here.
 
+## [Unreleased]
+
+### Changed
+- Confirmed compatibility with WordPress 7.2 (tested on 7.2-RC3, PHP 8.5) and updated `Tested up to`.
+
 ## [2.3.4] - 2026-11-16
 
 ### Fixed
