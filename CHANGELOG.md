@@ -6,6 +6,7 @@ All notable changes to Warder Cookie Consent are documented here.
 
 ### Changed
 - Confirmed compatibility with WordPress 7.2 (tested on 7.2-RC3, PHP 8.5) and updated `Tested up to`.
+- Annotated the settings save handler so Plugin Check no longer flags `$_POST['warder_options']` as unsanitized. It was already sanitized by `warder_sanitize_options_input()`, behind a nonce and capability check. No behavior change.
 
 ## [2.3.4] - 2026-11-16
 
